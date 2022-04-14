@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+  <!--
+        QUIZ GAME!
+
+        RULES:
+        / The player must guess correctly a certain amount of questions
+        / Each correct answer gives him one point
+        / Answers could be multiple or true/false
+        / At the end of the game, the user must know his/her total score
+
+        QUESTIONS:
+        / You can get them from this URL ( http://bit.ly/strive_QUIZZ ) or you can write your own
+        / Could be multiple of boolean (true / false)
+
+        HINTS:
+        / Keep a global variable score for the user score
+        / Keep a variable questionNumber for the question the user is answering
+        / When questionNumber is bigger then the available questions, present the score
+        / Start working with the questions saved in a variable (or you can use AJAX for fetching external questions if you already know how to do it!)
+        / Start with the easier version and THEN implement the EXTRAs
+        / Please debug everything / try it on the console to be sure of what to expect from your code
+
+        EXTRA:
+        / Show if the answer provided was the wrong one or correct it after clicking
+        / Present the questions one at a time instead of having all of them displayed together
+        / Let the user select difficulty and number of questions (you can get q/a from https://opentdb.com/api.php?amount=10&category=18&difficulty=easy modifying amount and difficulty)
+    
+        /* WHEN YOU ARE FINISHED
+          Commit and push the code to your personal GitHub repository; then post the link of your commit on the Homework section of today's Eduflow.
+        */
+    -->
+<title>Quiz!</title>
+<style>
+  #looser{
+    display: none;
+    position: relative;
+    left: 36%;
+  }
+  h4{
+    margin-top: 30px;
+    position: relative;
+    right: 20px;
+  }
+  hr{
+    width: 60%;
+  }
+  h1{
+    margin-top: 30px;
+  }
+  .total{
+    background-color: #F8F8F8;
+    margin: 0 auto;
+    width: 800px;
+    text-align: center;
+  }
+  h3{
+    margin-top: 90px;
+    text-align: center;
+  }
+  ol{
+    list-style-type: none;
+  }
+  .questions{
+    border : solid black 1px;
+    margin-top: 120px;
+    display: none;
+  }
+  #winner{
+    box-shadow: gray 2px 2px 2px;
+    display: none;
+    width: 200px;
+    position: relative;
+    left: 36%;
+  }
+</style>
+  <head></head>
+  <body>
+    <div class="total">
+      <div class="header">
+    <h1>Quiz time!</h1>
+    <h3>Rules are simple :
+      <ol>
+        <li>Just check the right answer and when you done press the "im done!" button</li>
+        <li>You can only select one answer</li>
+        <h4><b>Goodluck!</b></h4>
+      </ol>
+    </h3>
+  </div>
+  <div class="questions">
+  <h5>Q1</h5>
+  <hr>
+  <p>What does CPU stand for?</p>
+  <input type="radio" name="Question1" id="correct1">Central Processing Unit
+  <input type="radio" name="Question1">Computer Personal Unit<br>
+  <input type="radio" name="Question1">Central Process Unit
+  <input type="radio" name="Question1">Central Processor Unit<br/>
+  <button onclick="next(1)">Next one!</button>
+  </div>
+  <div class="questions">
+  <h5>Q2</h5>
+  <hr>
+  <p>In the programming language Java, which of these keywords would you put on a variable to make sure it doesn&#039;t get modified?</p>
+  <input type="radio" name="Question2">Private
+  <input type="radio" name="Question2" id="correct2">Final<br>
+  <input type="radio" name="Question2">Static
+  <input type="radio" name="Question2">Public<br/>
+  <button onclick="next(2)">Next one!</button>
+</div>
+  <div class="questions">
+  <h5>Q3</h5>
+  <hr>
+  <p>The logo for Snapchat is a Bell.</p>
+  <input type="radio" name="Question3" id="correct3">false
+  <input type="radio" name="Question3">true<br>
+  <button onclick="next(3)">Next one!</button>
+</div>
+  <div class="questions">
+  <h5>Q4</h5>
+  <hr>
+  <p>"Pointers were not used in the original C programming language; they were added later on in C++.</p>
+  <input type="radio" name="Question4" >True
+  <input type="radio" name="Question4" id="correct4">False<br>
+  <button onclick="next(4)">Next one!</button>
+</div>
+  <div class="questions">
+  <h5>Q5</h5>
+  <hr>
+  <p>What is the most preferred image format used for logos in the Wikimedia database?</p>
+  <input type="radio" name="Question5">.gif
+  <input type="radio" name="Question5">.jpeg<br>
+  <input type="radio" name="Question5">.png
+  <input type="radio" name="Question5" id="correct5">.svg<br/>
+  <button onclick="next(5)">Next one!</button>
+</div>
+  <div class="questions">
+  <h5>Q6</h5>
+  <hr>
+  <p>In web design, what does CSS stand for?</p>
+  <input type="radio" name="Question6">Corrective Style Sheet
+  <input type="radio" name="Question6">Computer Style Sheet<br>
+  <input type="radio" name="Question6" id="correct6">Cascading Style Sheet
+  <input type="radio" name="Question6">Counter Strike: Source<br/>
+  <button onclick="next(6)">Next one!</button>
+</div>
+  <div class="questions">
+  <h5>Q7</h5>
+  <hr>
+  <p>What is the code name for the mobile operating system Android 7.0?</p>
+  <input type="radio" name="Question7" >Ice Cream Sandwich
+  <input type="radio" name="Question7">Jelly Bean<br>
+  <input type="radio" name="Question7" id="correct7">Nougat
+  <input type="radio" name="Question7">Marshmallow<br/>
+  <button onclick="next(7)">Next one!</button>
+</div>
+  <div class="questions">
+  <h5>Q8</h5>
+  <hr>
+  <p>On Twitter, what is the character limit for a Tweet?</p>
+  <input type="radio" name="Question8">100
+  <input type="radio" name="Question8" id="correct8">140<br>
+  <input type="radio" name="Question8">160
+  <input type="radio" name="Question8">120<br/>
+  <button onclick="next(8)">Next one!</button>
+</div>
+  <div class="questions">
+  <h5>Q9</h5>
+  <hr>
+  <p>Linux was first created as an alternative to Windows XP.</p>
+  <input type="radio" name="Question9" id="correct9">False
+  <input type="radio" name="Question9">True<br>
+  <button onclick="next(9)">Next one!</button>
+</div>
+  <div class="questions">
+  <h5>Q10</h5>
+    <hr>
+  <p>What will make you hate life more?</p>
+  <input type="radio" name="Question10">Watching all your friends die in World War 3
+  <input type="radio" name="Question10" id="correct10">Trying to figure out why you gettin an error in JavaScript for 5hours straight<br>
+  <button onclick="result()">i'm done!</button>
+  </div>
+  <img id="looser" src="https://cdn.discordapp.com/attachments/685210402577055758/964169076538765372/unknown.png">
+  <img id="winner" src="https://cdn.discordapp.com/attachments/685210402577055758/964176554307485707/unknown.png">
+  </div>
+    <script>
+      // showing the first question
+      document.getElementsByClassName("questions")[0].style.display = 'block';
+      function next(number){
+      document.getElementsByClassName("questions")[number-1].style.display = 'none';
+      document.getElementsByClassName("questions")[number].style.display = 'block';
+      }
+      // gettin the result
+      function result(){
+        let score = 0;
+        if(document.getElementById('correct1').checked){
+          score++;
+        }if(document.getElementById('correct2').checked){
+          score++;
+        }if(document.getElementById('correct3').checked){
+          score++;
+        }if(document.getElementById('correct4').checked){
+          score++;
+        }if(document.getElementById('correct5').checked){
+          score++;
+        }if(document.getElementById('correct6').checked){
+          score++;
+        }if(document.getElementById('correct7').checked){
+          score++;
+        }if(document.getElementById('correct8').checked){
+          score++;
+        }if(document.getElementById('correct9').checked){
+          score++;
+        }if(document.getElementById('correct10').checked){
+          score++;
+        }
+        if(score>=5){
+          document.getElementById("winner").style.display = "block"
+          alert(`Damn boi you passed you got ${score} questions right`);
+        }else if (score<5){
+          document.getElementById("looser").style.display = "block";
+          alert(`Maybe next time you will pass sadly you just got ${score} questions right`);
+        }
+      }
+      const questions = [
+        {
+          category: "Science: Computers",
+          type: "multiple",
+          difficulty: "easy",
+          question: "What does CPU stand for?",
+          correct_answer: "Central Processing Unit",
+          incorrect_answers: [
+            "Central Process Unit",
+            "Computer Personal Unit",
+            "Central Processor Unit",
+          ],
+        },
+        {
+          category: "Science: Computers",
+          type: "multiple",
+          difficulty: "easy",
+          question:
+            "In the programming language Java, which of these keywords would you put on a variable to make sure it doesn&#039;t get modified?",
+          correct_answer: "Final",
+          incorrect_answers: ["Static", "Private", "Public"],
+        },
+        {
+          category: "Science: Computers",
+          type: "boolean",
+          difficulty: "easy",
+          question: "The logo for Snapchat is a Bell.",
+          correct_answer: "False",
+          incorrect_answers: ["True"],
+        },
+        {
+          category: "Science: Computers",
+          type: "boolean",
+          difficulty: "easy",
+          question:
+            "Pointers were not used in the original C programming language; they were added later on in C++.",
+          correct_answer: "False",
+          incorrect_answers: ["True"],
+        },
+        {
+          category: "Science: Computers",
+          type: "multiple",
+          difficulty: "easy",
+          question:
+            "What is the most preferred image format used for logos in the Wikimedia database?",
+          correct_answer: ".svg",
+          incorrect_answers: [".png", ".jpeg", ".gif"],
+        },
+        {
+          category: "Science: Computers",
+          type: "multiple",
+          difficulty: "easy",
+          question: "In web design, what does CSS stand for?",
+          correct_answer: "Cascading Style Sheet",
+          incorrect_answers: [
+            "Counter Strike: Source",
+            "Corrective Style Sheet",
+            "Computer Style Sheet",
+          ],
+        },
+        {
+          category: "Science: Computers",
+          type: "multiple",
+          difficulty: "easy",
+          question:
+            "What is the code name for the mobile operating system Android 7.0?",
+          correct_answer: "Nougat",
+          incorrect_answers: [
+            "Ice Cream Sandwich",
+            "Jelly Bean",
+            "Marshmallow",
+          ],
+        },
+        {
+          category: "Science: Computers",
+          type: "multiple",
+          difficulty: "easy",
+          question: "On Twitter, what is the character limit for a Tweet?",
+          correct_answer: "140",
+          incorrect_answers: ["120", "160", "100"],
+        },
+        {
+          category: "Science: Computers",
+          type: "boolean",
+          difficulty: "easy",
+          question: "Linux was first created as an alternative to Windows XP.",
+          correct_answer: "False",
+          incorrect_answers: ["True"],
+        },
+        {
+          category: "Science: Computers",
+          type: "multiple",
+          difficulty: "easy",
+          question:
+            "Which programming language shares its name with an island in Indonesia?",
+          correct_answer: "Java",
+          incorrect_answers: ["Python", "C", "Jakarta"],
+        },
+      ];
+      window.onload = function () {
+        // HINTS
+        // IF YOU ARE DISPLAYING ALL THE QUESTIONS AT ONCE:
+        // For each question, create a container for wrapping it; then create a radio button
+        // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio
+        // with, as options, both the correct answer and the incorrect ones
+        // (you'll probably need to google how to get the value from a radio button in JS to evaluate the final score)
+        //
+        // IF YOU ARE DISPLAYING ONE QUESTION AT A TIME
+        // Display the first question with the text and the radio buttons
+        // when the user selects an answer, pick the next question from the array and replace the old one with it
+        // saving the user's choice in a variable
+      };
+
+      // How to calculate the result? You can do it in 2 ways:
+      // If you are presenting all the questions together, just take all the radio buttons and check if the selected answer === correct_answer
+      // If you are presenting one question at a time, just add one point or not to the user score if the selected answer === correct_answer
+    </script>
+  </body>
+</html>
